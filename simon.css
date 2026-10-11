@@ -1,0 +1,37 @@
+body{
+    text-align: center;
+}
+.btn{
+    width:200px;
+    height: 200px;
+    border: 10px solid black;
+    border-radius: 20%;
+    margin: 2.5rem;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+}
+.red{
+    background-color: red;
+}
+.yellow{
+    background-color: yellow;
+}
+.orange{
+    background-color: orange;
+
+}
+.blue{
+    background-color: aqua;
+}
+.flash{
+    background-color: white;
+}
+.correct{
+    background-color: greenyellow;
+}
+.wrong{
+    background-color: red;
+}
