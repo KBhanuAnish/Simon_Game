@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simon Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+  <!-- floating pixel confetti -->
+  <div class="pixels" aria-hidden="true">
+    <span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <main class="home">
+
+    <!-- the Simon board: tiles flash in a repeating sequence -->
+    <div class="board" aria-hidden="true">
+      <div class="tile tile-green"></div>
+      <div class="tile tile-red"></div>
+      <div class="tile tile-yellow"></div>
+      <div class="tile tile-blue"></div>
+      <div class="core"></div>
+    </div>
+
+    <h1 class="title">
+      <span class="line">Welcome to</span>
+      <span class="line big">Simon Game</span>
+    </h1>
+
+    <form id="name-form" class="name-form" method="get" action="/">
+      <label for="player-name" class="label">What is your name?</label>
+      <input
+        type="text"
+        id="player-name"
+        name="player-name"
+        maxlength="12"
+        placeholder="Type here"
+        required
+      >
+      <button type="submit" id="start-btn" class="start-btn">Start</button>
+    </form>
+
+  </main>
+
+  <!-- add your JavaScript here later, e.g. <script src="script.js"></script> -->
+</body>
+</html>

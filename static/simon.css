@@ -1,37 +1,179 @@
-body{
-    text-align: center;
-}
-.btn{
-    width:200px;
-    height: 200px;
-    border: 10px solid black;
-    border-radius: 20%;
-    margin: 2.5rem;
+/* ---------- Tokens ---------- */
+:root {
+  --ink: #14102b;
+  --night: #1d1740;
+  --panel: #2b2360;
+  --cream: #fff4d6;
+
+  --red: #e63946;
+  --red-lit: #ff9aa2;
+  --yellow: #f4c20d;
+  --yellow-lit: #fff08a;
+  --blue: #3a7bd5;
+  --blue-lit: #9cc8ff;
+  --orange: #ff8c1a;
+  --orange-lit: #ffc98a;
+
+  --px: 8px; /* one "pixel" */
 }
 
-.container{
-    display: flex;
-    justify-content: center;
-}
-.red{
-    background-color: red;
-}
-.yellow{
-    background-color: yellow;
-}
-.orange{
-    background-color: orange;
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 32px 16px 48px;
+  background-color: var(--night);
+  /* checkerboard pixel floor */
+  background-image:
+    linear-gradient(45deg, var(--ink) 25%, transparent 25%, transparent 75%, var(--ink) 75%),
+    linear-gradient(45deg, var(--ink) 25%, transparent 25%, transparent 75%, var(--ink) 75%);
+  background-size: 64px 64px;
+  background-position: 0 0, 32px 32px;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  color: var(--cream);
+  text-align: center;
+  image-rendering: pixelated;
 }
-.blue{
-    background-color: aqua;
+
+/* ---------- Headings ---------- */
+h1 {
+  font-size: clamp(22px, 6vw, 44px);
+  line-height: 1.3;
+  color: var(--yellow);
+  text-shadow: 4px 4px 0 var(--red), 8px 8px 0 var(--ink);
+  animation: drop 0.9s steps(6, end) both, wiggle 3s steps(1, end) 1.5s infinite;
 }
-.flash{
-    background-color: white;
+
+#mianline {
+  font-size: clamp(10px, 2.6vw, 14px);
+  line-height: 1.8;
+  color: var(--cream);
+  text-shadow: 3px 3px 0 var(--ink);
+  max-width: 90vw;
+  animation: blink 1s steps(1, end) infinite;
 }
-.correct{
-    background-color: greenyellow;
+
+/* ---------- Divider ---------- */
+hr {
+  width: min(480px, 90vw);
+  height: var(--px);
+  border: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--cream) 0 var(--px),
+    transparent var(--px) calc(var(--px) * 2)
+  );
 }
-.wrong{
-    background-color: red;
+
+/* ---------- Board ---------- */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--px) * 2);
+  padding: calc(var(--px) * 2);
+  background: var(--ink);
+  box-shadow:
+    0 0 0 var(--px) var(--cream),
+    0 0 0 calc(var(--px) * 2) var(--ink),
+    calc(var(--px) * 3) calc(var(--px) * 3) 0 calc(var(--px) * 2) rgba(0, 0, 0, 0.45);
+  animation: rise 0.8s steps(6, end) 0.6s both;
+}
+
+/* the two rows (class names start with a digit, so use attribute selectors) */
+div[class="1-line"],
+div[class="2line"] {
+  display: flex;
+  gap: calc(var(--px) * 2);
+}
+
+/* ---------- Colour buttons ---------- */
+.btn {
+  width: clamp(110px, 28vw, 180px);
+  aspect-ratio: 1;
+  cursor: pointer;
+  background: var(--c);
+  /* chunky bevel */
+  box-shadow:
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 rgba(0, 0, 0, 0.3),
+    inset var(--px) var(--px) 0 rgba(255, 255, 255, 0.25),
+    0 0 0 4px var(--ink);
+  transition: none;
+}
+
+.btn:hover { filter: brightness(1.12); }
+
+.btn:active {
+  transform: translate(4px, 4px);
+}
+
+.red    { --c: var(--red);    --lit: var(--red-lit); }
+.yellow { --c: var(--yellow); --lit: var(--yellow-lit); }
+.blue   { --c: var(--blue);   --lit: var(--blue-lit); }
+.orange { --c: var(--orange); --lit: var(--orange-lit); }
+
+/* ---------- Flash states (add/remove these classes from JavaScript) ---------- */
+.flash {
+  background: var(--lit);
+  filter: brightness(1.25);
+  transform: scale(1.06);
+}
+
+.userflash {
+  background: var(--cream);
+  transform: scale(0.94);
+}
+
+/* ---------- Game over (optional: add class "game-over" to body from JS) ---------- */
+body.game-over {
+  background-color: var(--red);
+  animation: shake 0.4s steps(2, end) 2;
+}
+
+/* ---------- Animations ---------- */
+@keyframes drop {
+  from { opacity: 0; transform: translateY(-48px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(48px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes wiggle {
+  0%, 90%, 100% { transform: translate(0, 0); }
+  92% { transform: translate(-4px, 0); }
+  94% { transform: translate(4px, -4px); }
+  96% { transform: translate(-4px, 4px); }
+  98% { transform: translate(4px, 0); }
+}
+
+@keyframes blink {
+  0%, 49%   { opacity: 1; }
+  50%, 100% { opacity: 0.35; }
+}
+
+@keyframes shake {
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(-8px); }
+  75%  { transform: translateX(8px); }
+  100% { transform: translateX(0); }
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 480px) {
+  .btn { width: 40vw; }
+}
+
+/* ---------- Respect reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
+  }
 }
