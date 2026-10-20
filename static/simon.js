@@ -2,12 +2,14 @@ let count=0;
 let started=false;
 let input=[];
 let output=[];
+let scoreSaved=false;
 let col=['red','yellow','blue','orange'];
 let body=document.querySelector('body');
 let mainLine=document.querySelector('#mianline')
     body.addEventListener('keydown',function(){
             if(started==false){
             started=true;
+            scoreSaved=false;
             levelUp();
             }
         }
@@ -35,9 +37,10 @@ function checkAns(ind){
         }
     }
     else{
-        
+        const finalScore = Math.max(0, count - 1);
         mainLine.innerText=`Danegey Tapu othav ra puka ! 
-            Ne score ${count-1}`;
+            Ne score ${finalScore}`;
+        saveScore(finalScore);
         resetL();
     }
 }
@@ -66,6 +69,21 @@ function resetL(){
     count=0;
     input=[];
     output=[];
-    
+}
 
+async function saveScore(score){
+    if (scoreSaved) return;
+    scoreSaved = true;
+    try {
+        const response = await fetch(`/api/players/${encodeURIComponent(playerId)}/score`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ score })
+        });
+        if (!response.ok) throw new Error(`Request failed (${response.status})`);
+        console.log('Score saved:', (await response.json()).score);
+    } catch (error) {
+        scoreSaved = false;
+        console.error('Could not save score:', error);
+    }
 }

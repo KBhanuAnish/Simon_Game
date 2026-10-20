@@ -219,6 +219,36 @@ body {
   animation: pulse 1.2s steps(2, end) 2s infinite;
 }
 
+.leaderboard-btn {
+  font-family: inherit;
+  font-size: 12px;
+  padding: 12px 20px;
+  color: var(--ink);
+  background: var(--blue);
+  border: 0;
+  border-radius: 0;
+  cursor: pointer;
+  box-shadow:
+    inset -4px -4px 0 rgba(0, 0, 0, 0.3),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.35),
+    0 0 0 4px var(--ink),
+    6px 6px 0 4px var(--ink);
+}
+
+.leaderboard-btn:hover,
+.leaderboard-btn:focus-visible {
+  background: var(--blue-lit);
+  outline: none;
+}
+
+.leaderboard-btn:active {
+  transform: translate(6px, 6px);
+  box-shadow:
+    inset -4px -4px 0 rgba(0, 0, 0, 0.3),
+    inset 4px 4px 0 rgba(255, 255, 255, 0.35),
+    0 0 0 4px var(--ink);
+}
+
 .start-btn:hover,
 .start-btn:focus-visible {
   background: var(--green-lit);
